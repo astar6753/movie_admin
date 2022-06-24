@@ -9,6 +9,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>메인페이지</h1>
+    <h1>전체 통계</h1>
 </body>
 </html>

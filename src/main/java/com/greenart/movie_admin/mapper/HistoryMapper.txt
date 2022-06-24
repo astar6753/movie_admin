@@ -1,0 +1,20 @@
+package com.greenart.movie_admin.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.greenart.movie_admin.data.history.##VO;
+
+
+
+
+@Mapper
+public interface ##Mapper {
+
+    public List<##VO> select##();
+    public void insert##(##VO data);
+    public void delete##(Integer $$_seq);
+    public void update##(Integer $$_seq, ##VO data);
+    
+}

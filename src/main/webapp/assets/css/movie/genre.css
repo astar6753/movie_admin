@@ -1,0 +1,32 @@
+main {padding: 30px; min-width: 1200px;}
+main > h1 {font-size: 36px; font-weight: 700; color: #333; margin-bottom: 30px;}
+.genre_header {text-align: right;}
+.genre_item {
+    border: 1px solid #ccc; display: inline-block; vertical-align: top;
+    padding: 15px; margin: 10px; width: 200px; text-align: center;
+}
+
+.genre_item .name {font-size: 24px; font-weight: 500; margin-bottom: 10px;}
+.genre_item .count {margin-bottom: 20px;}
+.genre_item .count * {vertical-align: bottom;}
+.genre_item .count span {font-size: 14px; color: #565656;}
+.genre_item .count b {font-size: 24px; font-weight: 700;}
+.genre_item button {margin: 5px; font-family: "Noto Sans KR"; width: 80px; height: 30px;}
+
+.pager_area {text-align: center;}
+.pager_area a {color: #333; text-decoration: none; margin: 10px;}
+.pager_area a:hover {font-weight: 700; text-decoration: underline;}
+
+.insert_data_area {position: fixed; width: 100vw; height: 100vh;
+    left: 0; top: 0; background-color: #00000056; display: none;
+}
+.insert_data {
+    position: absolute; left: 50%; top: 50%; width: 270px; padding: 30px;
+    margin-left: -165px; margin-top: -100px;
+    background-color: #fff; box-shadow: 0 0 5px #00000056; text-align: center;
+}
+.popup_title {font-size: 24px; font-weight: 700; margin-bottom: 15px;}
+.before {color: #767676; margin-bottom: 15px;}
+/* .before::before {content:"변경 전 : "} */
+.insert_data input {width: 100%; font-family: "Noto Sans KR";}
+.insert_data button {width: 120px; height: 35px; font-family: "Noto Sans KR"; margin: 5px;}

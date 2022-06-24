@@ -1,0 +1,26 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.greenart.movie_admin.mapper.MovieMapper">
+    <insert id="insertGenre">
+        INSERT INTO genre_info(genre_name) values (#{name})
+    </insert>
+    <select id="getGenreList" resultType="com.greenart.movie_admin.data.movie.GenreInfoVO">
+        select *,(select count(*) from movie_info where mi_genre_seq = genre_seq) as genre_count
+        from genre_info limit 20 offset #{offset}
+    </select>
+    <select id="getGenrePageCnt" resultType="java.lang.Integer">
+        select ceil(count(*)/20) from genre_info
+    </select>
+    <select id="getGenreBySeq" resultType="com.greenart.movie_admin.data.movie.GenreInfoVO">
+        select * from genre_info where genre_seq = #{seq}
+    </select>
+    <update id="updateGenreName">
+        update genre_info set genre_name = #{name} where genre_seq = #{seq}
+    </update>
+    <delete id="deleteGenreInfo">
+        delete from genre_info where genre_seq = #{seq}
+    </delete>
+</mapper>
+
+
+
