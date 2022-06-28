@@ -23,4 +23,17 @@ public class MovieController {
 
         return "/movie/genre";
     }
+
+    @GetMapping("/list")
+    public String getMovieList(Model model) {
+        
+        
+        return "/movie/list";
+    }
+    @GetMapping("/add")
+    public String getMovieAdd(Model model) {
+        model.addAttribute("genreList", movie_mapper.getGenreList(null));
+        return "/movie/form";
+    }
+    
 }

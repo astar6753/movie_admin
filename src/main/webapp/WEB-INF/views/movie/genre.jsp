@@ -9,11 +9,11 @@
     <script src="/assets/js/common/util.js"></script>
     <script src="/assets/js/movie/genre.js"></script>
     <title>Document</title>
-    <link rel="stylesheet" href="/assets/css//movie/genre.css">
+    <link rel="stylesheet" href="/assets/css/movie/genre.css">
 </head>
 <body>
     <main>
-        <h1>장르정보관리</h1>
+        <h1>장르 정보 관리</h1>
         <div class="genre_data_area">
             <div class="genre_header">
                 <button id="add">장르 정보 추가</button>

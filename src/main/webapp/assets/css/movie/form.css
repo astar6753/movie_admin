@@ -1,0 +1,8 @@
+.movie_img {
+    display: inline-block; vertical-align: top; height: 200px; position: relative;
+    border: 1px solid #000; margin-right: 10px;
+}
+.movie_img img {height: 100%;}
+.movie_img button {
+    position: absolute; right: 0; top: 0;
+}

@@ -6,7 +6,10 @@
     </insert>
     <select id="getGenreList" resultType="com.greenart.movie_admin.data.movie.GenreInfoVO">
         select *,(select count(*) from movie_info where mi_genre_seq = genre_seq) as genre_count
-        from genre_info limit 20 offset #{offset}
+        from genre_info 
+        <if test="offset !=null">
+            limit 20 offset #{offset}
+        </if>
     </select>
     <select id="getGenrePageCnt" resultType="java.lang.Integer">
         select ceil(count(*)/20) from genre_info
@@ -20,6 +23,12 @@
     <delete id="deleteGenreInfo">
         delete from genre_info where genre_seq = #{seq}
     </delete>
+
+
+
+
+
+
 </mapper>
 
 

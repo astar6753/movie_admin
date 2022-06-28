@@ -8,4 +8,9 @@ public class CinemaActorInfoVO {
     private String cai_name;
     private String cai_country;
     
+    public CinemaActorInfoVO(){}
+    public CinemaActorInfoVO(String cai_name, String cai_country){
+        this.cai_name = cai_name;
+        this.cai_country = cai_country;
+    }
 }

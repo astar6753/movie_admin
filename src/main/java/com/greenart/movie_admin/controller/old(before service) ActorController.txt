@@ -1,0 +1,75 @@
+package com.greenart.movie_admin.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.greenart.movie_admin.data.actor.ActorCountryVO;
+import com.greenart.movie_admin.data.actor.CinemaActorListVO;
+import com.greenart.movie_admin.mapper.ActorMapper;
+import com.greenart.movie_admin.service.ActorService;
+
+@Controller
+@RequestMapping("/actor")
+public class ActorController {
+    @Autowired ActorService actor_servie;
+    // @Autowired ActorMapper actor_mapper;
+    @GetMapping("/list")
+    public String getActorList(
+        @RequestParam @Nullable String keyword,
+        @RequestParam @Nullable Integer page,
+        @RequestParam @Nullable String country, Model model
+    ) {
+        // String originKeyword = keyword;
+        // if(keyword==null) keyword = "%%";
+        // else keyword = "%"+keyword+"%";
+
+        // Integer pageCnt = actor_mapper.selectActorListPageCount(keyword, country);
+
+        // List<String> pagerURL = new ArrayList<String>();
+        // for(int i=0; i<pageCnt; i++){
+        //     String url = "/actor/list?page="+(i+1);
+        //     // if(originKeyword != null) url += "&keyword="+originKeyword;
+        //     if(keyword != null && !keyword.equals("")) url += "&keyword="+keyword;
+        //     if(country != null) url += "&country="+country;
+        //     pagerURL.add(url);
+        // }
+        // List<ActorCountryVO> countryLinkList = new ArrayList<ActorCountryVO>();
+        // List<String> countryList =  actor_mapper.selectActorCountryList();
+        
+        // for(int i=0; i<countryList.size(); i++){
+        //     String url = "/actor/list?country="+countryList.get(i);
+        //     if(keyword != null && !keyword.equals("")) url += "&keyword="+keyword;
+        //     // countryList.set(i,url);
+        //     ActorCountryVO data = new ActorCountryVO();
+        //     data.setUrl(url);
+        //     data.setCountry(countryList.get(i));
+        //     countryLinkList.add(data);
+        // }
+        model.addAttribute("countryURL",actor_servie.makeActorCountryLink(keyword));
+        model.addAttribute("pagerURL",actor_servie.makePagerURL(keyword, country));
+        model.addAttribute("keyword",keyword);
+        if(page==null) page=1;
+        model.addAttribute("page",page);
+        model.addAttribute("country", country);
+
+        // List<CinemaActorListVO> list = actor_mapper.selectCinemaActorList(keyword, country, (page-1)*10);
+        // for(int i=0; i<list.size(); i++){
+        //     if(list.get(i).getPhoto() == null) {
+        //         list.get(i).setPhoto("/images/actor/default.jpg");
+        //     }
+        // }
+        // model.addAttribute("pageCount", actor_mapper.selectActorListPageCount(keyword, country));
+        // model.addAttribute("countryList", countryList);
+        model.addAttribute("list", actor_servie.getCinemaActorList(keyword, country, page));
+        return "/actor/list";
+    }
+}
+

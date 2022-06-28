@@ -52,8 +52,6 @@ $(function(){
         })
     })
     $("#add").click(function(){
-        $("#genre_name").val("");   //인풋창에 value값 초기화는 val()
-        $(".before").html("");  //속성값 초기화할때는 html()
         $(".popup_title").html("장르 정보 추가")
         $(".insert_data_area").show();
         $("#save").show();
@@ -62,7 +60,7 @@ $(function(){
     $("#cancel").click(function(){
         if(!confirm("취소하시겠습니까?")) return;
         $(".insert_data_area").hide();
-        $("#genre_name").val();   //인풋창에 value값 초기화는 val()
+        $("#genre_name").val("");   //인풋창에 value값 초기화는 val()
         $(".before").html("");  //속성값 초기화할때는 html()
     })
 })
