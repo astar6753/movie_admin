@@ -25,10 +25,60 @@
     </delete>
 
 
+    <insert id="insertMovieInfo"
+        parameterType="com.greenart.movie_admin.data.movie.MovieInfoVO"
+        useGeneratedKeys="true" keyProperty="mi_seq">
+        INSERT INTO movie_info
+        (mi_genre_seq, mi_title, mi_viewing_age, mi_showing_status, 
+        mi_country, mi_year, mi_opening_dt, mi_ruuning_time)
+        VALUES
+        (#{mi_genre_seq},#{mi_title},#{mi_viewing_age},#{mi_showing_status},
+        #{mi_country},#{mi_year},#{mi_opening_dt},#{mi_ruuning_time})
+    </insert>
+    <insert id="insertMovieImage">
+        INSERT INTO movie_image(mimg_mi_seq,mimg_order,mimg_file_name)
+        VALUES
+        <foreach collection="list" index="index" item="item" separator=",">
+        (#{seq},0,#{item})
+        </foreach>
+    </insert>
+    <insert id="insertMovieStoryImg">
+        INSERT INTO movie_story_img(msi_mi_seq,msi_order,msi_file_name)
+        VALUES
+        (#{seq},#{order},#{content})
+    </insert>
+    <insert id="insertMovieStoryText">
+        INSERT INTO movie_stroy_text(mst_mi_seq,mst_order,mst_text)
+        VALUES
+        (#{seq},#{order},#{content})
+    </insert>
+    <insert id="insertMovieTrailerVideo">
+        INSERT INTO trailer_video_info(tvi_mi_seq,tvi_order,tvi_file_name)
+        VALUES
+        <foreach collection="list" index="index" item="item" separator=",">
+        (#{seq},#{item.order},#{item.file})
+        </foreach>
+    </insert>
 
-
-
-
+    <select id="selectMovieList" resultType="com.greenart.movie_admin.data.movie.MovieInfoVO">
+        SELECT a.*,b.genre_name, c.mimg_file_name as poster_img FROM movie_info a
+        LEFT outer join genre_info b 
+            ON a.mi_genre_seq = b.genre_seq
+	    LEFT outer join (SELECT * FROM movie_image WHERE mimg_is_poster=1)c 
+            ON a.mi_seq = c.mimg_mi_seq
+        WHERE mi_title like '%${keyword}%'
+        <if test="country !=null">
+            and mi_country = #{country}
+        </if>
+        limit 10 offset #{offset}
+    </select>
+    <select id="selectMoviePageCnt" resultType="java.lang.Integer">
+        SELECT ceil(count(*)/20) from movie_info
+        WHERE mi_title like '%${keyword}%'
+        <if test="country !=null">
+            and mi_country = #{country}
+        </if>
+    </select>
 </mapper>
 
 

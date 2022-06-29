@@ -1,5 +1,7 @@
 let movie_imgs = new Array();
 let movie_desc_list = new Array();
+let movie_trailer_list = new Array();
+
 $(function(){
     $("#movie_img_select").change(function(){
         let form = $("#movie_img_form");
@@ -29,7 +31,6 @@ $(function(){
             }
         })
     });
-
     $("#desc_img_select").change(function(){
         let form = $("#desc_img_form");
         let formData = new FormData(form[0]);
@@ -61,7 +62,6 @@ $(function(){
             }
         })
     });
-
     $("#text_add").click(function(){
         let order = $(".desc_img_box").length + $(".desc_text_box").length+1;
         let tag = 
@@ -74,10 +74,108 @@ $(function(){
         console.log(movie_desc_list);
         $(".description_list").append(tag);
     });
+    $("#trailer_select").change(function(){
+        let form = $("#trailer_form");
+        let formData = new FormData(form[0]);
+        if($(this).val() == ''||$(this).val() == null) return;
+        $.ajax({
+            url:"/movies/upload/movie_trailer",
+            type:"put",
+            data:formData,
+            contentType:false,
+            processData:false,
+            success:function(result) {
+                console.log(result.filesize);
+                let split = $("#trailer_select").val().split("\\");
+                // console.log($("#trailer_select").val());    //풀 패스
+                // console.log(split[split.length-1]);         //파일 이름+확장자
+                // console.log(split[split.length-1].split(".")[0])  //파일이름
+                split = split[split.length-1].split(".");
+
+                if(!result.status) {
+                    alert(result.message);
+                    return;
+                }
+
+                let tag ='<tr>'
+                        +'    <td>'+($("#trailer_file_table tbody tr").length+1)+'</td>'
+                        +'    <td>'+split[0]+'</td>'
+                        +'    <td>'+result.ext+'</td>'
+                        +'    <td>'+(result.fileSize/1024/1024).toLocaleString()+'MB</td>'
+                        +'    <td>'
+                        +'        <button class="delete_trailer" onclick=deleteTrailer("'+result.file+'")>삭제</button>'
+                        +'    </td>'
+                        +'</tr>';
+                movie_trailer_list.push(
+                    {
+                        order : $("#trailer_file_table tbody tr").length+1,
+                        file : result.file,
+                        ext : result.ext,
+                        fileSize : result.fileSize,
+                        originFileName : split[0]
+                    }
+                );
+                $("#trailer_file_table tbody").append(tag);
+            }
+        })
+    });
+    $("#save").click(function(){
+        if(!confirm("영화 정보를 등록하시겠습니까?"))return;
+        let data = {
+            movie_info:{
+                mi_genre_seq:$("#genre_info option:selected").val(),
+                mi_title:$("#movie_name").val(),
+                mi_viewing_age:$("#viewing_age option:selected").val(),
+                mi_ruuning_time:$("#running_time").val(),
+                mi_country:$("#movie_country").val(),
+                mi_opening_dt:$("#opening_dt").val(),
+                mi_showing_status:$("#movie_status option:selected").val(),
+                mi_year:$("#movie_year").val()
+            },
+            movie_imgs:movie_imgs,
+            movie_desc_list:movie_desc_list,
+            movie_trailer_list:movie_trailer_list
+        }
+        console.log("click");
+        console.log(JSON.stringify(data));
+        $.ajax({
+            url:"/api/movie/add",
+            type:"put",
+            data:JSON.stringify(data),
+            contentType:"application/json",
+            success:function(result) {
+                alert(result.message);
+                location.href="/movie/list";
+            }
+        })
+    });
 })
 
-
-
+function deleteTrailer(filename){
+    if(!confirm("트레일러 영상을 삭제하시겠습니까?")) return;
+    $.ajax({
+        url:"/movies/delete/movie_trailer/"+filename,
+        type:"delete",
+        success:function(result) {
+            alert(result.message);
+            
+            movie_trailer_list = movie_trailer_list.filter((data)=>data.file != filename);
+            $("#trailer_file_table tbody").html("");
+            for(let i = 0; i<movie_trailer_list.length; i++){
+                let tag ='<tr>'
+                            +'<td>'+(i+1)+'</td>'
+                            +'<td>'+movie_trailer_list[i].originFileName+'</td>'
+                            +'<td>'+movie_trailer_list[i].ext+'</td>'
+                            +'<td>'+(movie_trailer_list[i].fileSize/1024/1024).toLocaleString()+'MB</td>'
+                            +'<td>'
+                                +'<button class="delete_trailer" onclick=deleteTrailer("'+movie_trailer_list[i].file+'")>삭제</button>'
+                            +'</td>'
+                        +'</tr>';
+                $("#trailer_file_table tbody").append(tag);
+            }
+        }
+    })
+}
 function deleteImg(filename){
     if(!confirm("영화 이미지를 삭제하시겠습니까?")) return;
     $.ajax({
@@ -125,7 +223,7 @@ function deleteDescImg(filename){
                     if(movie_desc_list[i].type =="text"){
                         tag =
                             '<div class="desc_text_box">'
-                            +'<textarea cols="30" rows="10" id="text'+movie_desc_list[i].order+'" onkeyup=saveDescText('+order+')>'+movie_desc_list[i].content+'</textarea>'
+                            +'<textarea cols="30" rows="10" id="text'+movie_desc_list[i].order+'" onkeyup=saveDescText('+movie_desc_list[i].order+')>'+movie_desc_list[i].content+'</textarea>'
                             // +'<button class="desc_text_save" onclick="saveDescText('+movie_desc_list[i].order+')">저장</button>'
                             +'<button class="desc_text_del" onclick="deleteDescText('+movie_desc_list[i].order+')">삭제</button>'
                             +'</div>';
@@ -165,7 +263,7 @@ function deleteDescText(order){
         if(movie_desc_list[i].type =="text"){
             tag =
                 '<div class="desc_text_box">'
-                +'<textarea cols="30" rows="10" id="text'+movie_desc_list[i].order+'" onkeyup=saveDescText('+order+')>'+movie_desc_list[i].content+'</textarea>'
+                +'<textarea cols="30" rows="10" id="text'+movie_desc_list[i].order+'" onkeyup=saveDescText('+movie_desc_list[i].order+')>'+movie_desc_list[i].content+'</textarea>'
                 // +'<button class="desc_text_save" onclick="saveDescText('+movie_desc_list[i].order+')">저장</button>'
                 +'<button class="desc_text_del" onclick="deleteDescText('+movie_desc_list[i].order+')">삭제</button>'
                 +'</div>';

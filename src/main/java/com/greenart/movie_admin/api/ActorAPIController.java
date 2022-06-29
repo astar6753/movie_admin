@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,9 @@ import com.greenart.movie_admin.mapper.ActorMapper;
 @RequestMapping("/api/actor")
 public class ActorAPIController {
     @Autowired ActorMapper actor_mapper;
+    
     @PutMapping("/add")
+    @Transactional
     public Map<String,Object> putActorInfo(@RequestBody ActorInsertVO data) {
         Map<String,Object> resultMap = new LinkedHashMap<String, Object>();
 

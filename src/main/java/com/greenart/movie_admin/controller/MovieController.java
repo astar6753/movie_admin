@@ -25,15 +25,30 @@ public class MovieController {
     }
 
     @GetMapping("/list")
-    public String getMovieList(Model model) {
+    public String getMovieList(Model model, @RequestParam @Nullable String keyword, @RequestParam @Nullable Integer page, @RequestParam @Nullable String country) {
         
+        model.addAttribute("keyword",keyword);
+        model.addAttribute("country",country);
+        if(page==null) page = 1;
+        model.addAttribute("page",page);
+
+        model.addAttribute("list", movie_mapper.selectMovieList(keyword, (page-1)*10, country));
+        model.addAttribute("pageCount", movie_mapper.selectMoviePageCnt(keyword, country));
         
         return "/movie/list";
     }
     @GetMapping("/add")
     public String getMovieAdd(Model model) {
+        model.addAttribute("mode", "add");
         model.addAttribute("genreList", movie_mapper.getGenreList(null));
+
+        return "/movie/form";
+    }    
+    @GetMapping("/detail")
+    public String getMovieDetail(Model model, @RequestParam Integer movie_no) {
+        model.addAttribute("mode", "modify");
+        model.addAttribute("genreList", movie_mapper.getGenreList(null));
+
         return "/movie/form";
     }
-    
 }

@@ -63,23 +63,35 @@ public class FileAPIController {
             //실제 리소스를 body에 포함
             .body(r);
     }
-    @PutMapping("/images/upload/{type}")
-    public Map<String,Object> putImageUpload(@PathVariable String type, @RequestPart MultipartFile file) {
+    @PutMapping("/{filetype}/upload/{type}")
+    public Map<String,Object> putImageUpload(@PathVariable String filetype, @PathVariable String type, @RequestPart MultipartFile file) {
         Map<String,Object> resultMap = new LinkedHashMap<String, Object>();
         //업로드 할 파일 경로 생성
         Path folderLocation = Paths.get(path+"/"+type);
 
         String fileName = file.getOriginalFilename();
-        
         String[] fileNameSplit = fileName.split("\\.");
         String ext = fileNameSplit[fileNameSplit.length-1];
-        
-        if(!ext.equalsIgnoreCase("gif") && !ext.equalsIgnoreCase("jpg") && !ext.equalsIgnoreCase("png")){
+
+        if(filetype.equals("images")){
+            if(!ext.equalsIgnoreCase("gif") && !ext.equalsIgnoreCase("jpg") && !ext.equalsIgnoreCase("png")){
+                resultMap.put("status", false);
+                resultMap.put("message","이미지 파일 확장자는 jpg, png, gif만 허용합니다.");
+                return resultMap;
+            }
+        }
+        else if(filetype.equals("movies")){
+            if(!ext.equalsIgnoreCase("mp4")){
+                resultMap.put("status", false);
+                resultMap.put("message","영상 파일 확장자는 mp4 허용합니다.");
+                return resultMap;
+            }
+        }
+        else{
             resultMap.put("status", false);
-            resultMap.put("message","이미지 파일 확장자는 jpg, png, gif만 허용합니다.");
+            resultMap.put("message","Invalid filetype : "+filetype+"\n use: [images,movies]");
             return resultMap;
         }
-
         Calendar c = Calendar.getInstance();
 
         String saveFileName = StringUtils.cleanPath(type+"_"+c.getTimeInMillis()+"."+ext);
@@ -95,12 +107,15 @@ public class FileAPIController {
             return resultMap;
         }
         
+        long fileSize = file.getSize();
         resultMap.put("status",true);
         resultMap.put("message","파일 업로드 완료");
         resultMap.put("file", saveFileName);
+        resultMap.put("ext", ext);
+        resultMap.put("fileSize", fileSize);
         return resultMap;
     }
-    @DeleteMapping("/images/delete/{type}/{filename}")
+    @DeleteMapping("/{filetype}/delete/{type}/{filename}")
     public Map<String,Object> deleteImageFile(@PathVariable String type, @PathVariable String filename) {
         Map<String,Object> resultMap = new LinkedHashMap<String, Object>();
         String filepath = path+"/"+type+"/"+filename;

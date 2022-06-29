@@ -14,7 +14,7 @@
     <main>
         <h1>영화 정보 <span class="type">추가</span></h1>
         <div class="basic_info">
-            <h1>영와 기본 정보</h1>
+            <h1>영화 기본 정보</h1>
             <table>
                 <tr>
                     <td>장르</td>
@@ -38,8 +38,8 @@
                             <option value="19">19세 이상</option>
                         </select>
                     </td>
-                    <td rowspan="2">상영시간</td>
-                    <td rowspan="2">
+                    <td>상영시간</td>
+                    <td>
                         <input type="text" id="running_time"><span>분</span>
                     </td>
                 </tr>
@@ -59,6 +59,10 @@
                             <option value="1">상영중</option>
                             <option value="2">스트리밍</option>
                         </select>
+                    </td>
+                    <td>연도</td>
+                    <td>
+                        <input type="text" id="movie_year">
                     </td>
                 </tr>
             </table>
@@ -82,22 +86,26 @@
                     <input type="file" id="trailer_select" name="file" accept="video/mp4" hidden>
                 </form>
                 <button id="trailer_file_add" onclick="document.getElementById('trailer_select').click()">트레일러 영상 추가</button>
-                <table>
+                <table id="trailer_file_table">
                     <thead>
                         <tr>
                             <td>순번</td>
                             <td>영상 파일 이름</td>
+                            <td>파일유형</td>
+                            <td>파일크기</td>
                             <td></td>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <!-- <tr>
                             <td>1</td>
                             <td>movie_trailer_alpskfwpojkfw.mp4</td>
+                            <td>mp4</td>
+                            <td>1234564789byte</td>
                             <td>
                                 <button class="delete_trailer">삭제</button>
                             </td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
             </div>
@@ -109,20 +117,24 @@
             <button id="img_add" onclick="document.getElementById('desc_img_select').click()">이미지 추가</button>
             <button id="text_add">설명 추가</button>
             <div class="description_list">
-                <!-- <div class="desc_img_box">
+                <!-- <%-- <div class="desc_img_box">
                     <img src="http://placekitten.com/960/540">
                     <button class="desc_img_del">삭제</button>
-                </div>-->
-                <!-- <div class="desc_text_box">
+                </div> --%>
+                <%-- <div class="desc_text_box">
                     <textarea cols="30" rows="10"></textarea>
                     <button class="desc_text_save">저장</button>
                     <button class="desc_text_del">삭제</button>
-                </div> -->
+                </div> --%> -->
             </div> 
         </div>
         <div class="button_area">
-            <button id="save">저장</button>
-            <button id="modify">수정</button>
+            <c:if test="${mode=='add'}">
+                <button id="save">저장</button>
+            </c:if>
+            <c:if test="${mode=='modify'}">
+                <button id="modify">수정</button>
+            </c:if>
             <button id="cancel">취소</button>
         </div>
     </main>
