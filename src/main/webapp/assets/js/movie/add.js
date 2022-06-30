@@ -1,7 +1,6 @@
 let movie_imgs = new Array();
 let movie_desc_list = new Array();
 let movie_trailer_list = new Array();
-let edit_mode = 'new';
 
 $(function(){
     $("#movie_img_select").change(function(){
@@ -118,28 +117,6 @@ $(function(){
                     }
                 );
                 $("#trailer_file_table tbody").append(tag);
-                if(edit_mode=='edit'){
-                    let trailer = {
-                        tvi_mi_seq:movie_seq,
-                        tvi_order:trailer_order,
-                        tvi_file_name:result.file
-                    }
-                    $.ajax({
-                        url:"/api/movie/add/trailer",
-                        type:"put",
-                        contentType:"application/json",
-                        data:JSON.stringify(trailer),
-                        success:function(r) {
-                            console.log(r);
-                            let len = $("#trailer_file_table tbody tr").length;
-                            $("#trailer_file_table tbody tr").eq(len-1).find(".delete_trailer")
-                                .attr(
-                                    "onclick",
-                                    'deleteTrailer("'+result.file+'", '+r.seq+')'
-                                );
-                        }
-                    })
-                }
             }
         })
     });
@@ -176,9 +153,7 @@ $(function(){
 })
 
 function deleteTrailer(filename,seq){
-    if(edit_mode=='edit') {
-        if(!confirm("해당 트레일러 영상을 삭제하시겠습니까?\n(주의:삭제된 데이터는 되돌릴 수 없습니다.)")) return;
-    }
+    if(!confirm("해당 트레일러 영상을 삭제하시겠습니까?\n(주의:삭제된 데이터는 되돌릴 수 없습니다.)")) return;
     $.ajax({
         url:"/movies/delete/movie_trailer/"+filename,
         type:"delete",
@@ -201,22 +176,9 @@ function deleteTrailer(filename,seq){
             }
         }
     })
-    if(edit_mode=='edit'){
-        $.ajax({
-            url:"/api/movie/delete/trailer?seq="+seq,
-            type:"delete",
-            success:function(result) {
-                console.log(result);
-                console.log(result.message);
-            }
-        })
-    }
-
 }
 function deleteImg(filename,seq){
-    if(edit_mode=='edit') {
-        if(!confirm("해당 영화 이미지를 삭제하시겠습니까?\n(주의:삭제된 데이터는 되돌릴 수 없습니다.)")) return;
-    }
+    if(!confirm("해당 영화 이미지를 삭제하시겠습니까?\n(주의:삭제된 데이터는 되돌릴 수 없습니다.)")) return;
     $.ajax({
         url:"/images/delete/movie/"+filename,
         type:"delete",
@@ -236,21 +198,9 @@ function deleteImg(filename,seq){
             }
         }
     })
-    if(edit_mode=='edit'){
-        $.ajax({
-            url:"/api/movie/delete/movie_img?seq="+seq,
-            type:"delete",
-            success:function(result) {
-                console.log(result);
-                console.log(result.message);
-            }
-        })
-    }
 }
 function deleteDescImg(filename){
-    if(edit_mode=='edit') {
-        if(!confirm("해당 콘텐츠 이미지를 삭제하시겠습니까?\n(주의:삭제된 데이터는 되돌릴 수 없습니다.)")) return;
-    }
+    if(!confirm("해당 콘텐츠 이미지를 삭제하시겠습니까?\n(주의:삭제된 데이터는 되돌릴 수 없습니다.)")) return;
     $.ajax({
         url:"/images/delete/movie_desc/"+filename,
         type:"delete",
@@ -297,9 +247,7 @@ function saveDescText(order){
     // }
 }
 function deleteDescText(order){
-    if(edit_mode=='edit') {
-        if(!confirm("해당 콘텐츠 설명을 삭제하시겠습니까?\n(주의:삭제된 데이터는 되돌릴 수 없습니다.)")) return;
-    }
+    if(!confirm("해당 콘텐츠 설명을 삭제하시겠습니까?\n(주의:삭제된 데이터는 되돌릴 수 없습니다.)")) return;
     movie_desc_list = movie_desc_list.filter((desc)=>order != desc.order);
     $(".description_list").html("");
     for(let i = 0; i<movie_desc_list.length; i++){
