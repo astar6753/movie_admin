@@ -3,7 +3,7 @@ package com.greenart.movie_admin.data.movie;
 import lombok.Data;
 
 @Data
-public class MovieStroyTextVO {
+public class MovieStoryTextVO {
     private Integer mst_seq;
     private Integer mst_mi_seq;
     private Integer mst_order;

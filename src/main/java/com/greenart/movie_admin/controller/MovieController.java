@@ -48,7 +48,12 @@ public class MovieController {
     public String getMovieDetail(Model model, @RequestParam Integer movie_no) {
         model.addAttribute("mode", "modify");
         model.addAttribute("genreList", movie_mapper.getGenreList(null));
-
+        
+        model.addAttribute("movie_no", movie_no);
+        model.addAttribute("movieInfo", movie_mapper.selectMovieInfoVOBySeq(movie_no));
+        model.addAttribute("imgList", movie_mapper.selectMovieImageVOBySeq(movie_no));
+        model.addAttribute("videoList", movie_mapper.selectTrailerVideoInfoVOBySeq(movie_no));
+        model.addAttribute("descList", movie_mapper.selectMovieDescriptionBySeq(movie_no));
         return "/movie/form";
     }
 }
