@@ -18,13 +18,28 @@ $(function(){
                     alert(result.message);
                     return;
                 }
-                let tag = 
-                '<div class="movie_img" filename="'+result.file+'">'
-                +'<img src="/images/movie/'+result.file+'">'
-                +'<button onclick=deleteImg("'+result.file+'")>&times;</button>'
-                +'</div>';
-                movie_imgs.push(result.file);
-                $(".movie_image_list").append(tag);
+                let imgData = {
+                    mimg_mi_seq:movie_seq,
+                    mimg_file_name:result.file
+                }
+                $.ajax({
+                    url:"/api/movie/add/image",
+                    type:"put",
+                    contentType:"application/json",
+                    data:JSON.stringify(imgData),
+                    success:function(r){
+                        console.log(r);
+                        let tag = 
+                        '<div class="movie_img" filename="'+result.file+'">'+
+                            '<img src="/images/movie/'+result.file+'">'+
+                            // '<button onclick=\"deleteImg("'+result.file+'", '+r.seq+')\">&times;</button>'+
+                            '<button onclick="deleteImg(\''+result.file+'\', '+r.seq+')">&times;</button>'+
+                        '</div>';
+                        movie_imgs.push({seq:r.seq, filename:result.file});
+                        $(".movie_image_list").append(tag);
+                    }
+                })
+                
             },
             error:function(error) {
                 console.log(error);
@@ -54,6 +69,7 @@ $(function(){
                 +'</div>';
                 // movie_imgs.push(result.file);
                 movie_desc_list.push({type:"img",content:result.file,order:order});
+                console.log(movie_desc_list);
                 $(".description_list").append(tag);
             },
             error:function(error) {
@@ -70,6 +86,7 @@ $(function(){
         +'<button class="desc_text_del" onclick="deleteDescText('+order+')">삭제</button>'
         +'</div>';
         movie_desc_list.push({type:"text",content:"",order:order});
+        console.log(movie_desc_list);
         $(".description_list").append(tag);
     });
     $("#trailer_select").change(function(){
@@ -118,34 +135,6 @@ $(function(){
             }
         })
     });
-    $("#save").click(function(){
-        if(!confirm("영화 정보를 등록하시겠습니까?"))return;
-        let data = {
-            movie_info:{
-                mi_genre_seq:$("#genre_info option:selected").val(),
-                mi_title:$("#movie_name").val(),
-                mi_viewing_age:$("#viewing_age option:selected").val(),
-                mi_ruuning_time:$("#running_time").val(),
-                mi_country:$("#movie_country").val(),
-                mi_opening_dt:$("#opening_dt").val(),
-                mi_showing_status:$("#movie_status option:selected").val(),
-                mi_year:$("#movie_year").val()
-            },
-            movie_imgs:movie_imgs,
-            movie_desc_list:movie_desc_list,
-            movie_trailer_list:movie_trailer_list
-        }
-        $.ajax({
-            url:"/api/movie/add",
-            type:"put",
-            data:JSON.stringify(data),
-            contentType:"application/json",
-            success:function(result) {
-                alert(result.message);
-                location.href="/movie/list";
-            }
-        })
-    });
 })
 
 function deleteTrailer(filename,seq){
@@ -165,7 +154,8 @@ function deleteTrailer(filename,seq){
                             +'<td>'+movie_trailer_list[i].ext+'</td>'
                             +'<td>'+(movie_trailer_list[i].fileSize/1024/1024).toLocaleString()+'MB</td>'
                             +'<td>'
-                                +'<button class="delete_trailer" onclick=deleteTrailer("'+movie_trailer_list[i].file+'")>삭제</button>'
+                                // +'<button class="delete_trailer" onclick=deleteTrailer("'+movie_trailer_list[i].file+'")>삭제</button>'
+                                +'<button onclick=deleteImg("'+movie_imgs[i].filename+'","'+movie_imgs[i].seq+'")>&times;</button>'
                             +'</td>'
                         +'</tr>';
                 $("#trailer_file_table tbody").append(tag);
@@ -181,21 +171,28 @@ function deleteImg(filename,seq){
         success:function(result) {
             alert(result.message);
             if(result.status) {
-                movie_imgs = movie_imgs.filter((img)=>(filename != img))
+                movie_imgs = movie_imgs.filter((img)=>filename != img.filename);
                 $(".movie_image_list").html("");
                 for(let i = 0; i<movie_imgs.length; i++){
                     let tag = 
-                    '<div class="movie_img" filename="'+movie_imgs[i]+'">'
-                    +'<img src="/images/movie/'+movie_imgs[i]+'">'
-                    +'<button onclick=deleteImg("'+movie_imgs[i]+'")>&times;</button>'
+                    '<div class="movie_img" filename="'+movie_imgs[i].filename+'","'+movie_imgs[i].seq+'">'
+                    +'<img src="/images/movie/'+movie_imgs[i].filename+'","'+movie_imgs[i].seq+'">'
+                    +'<button onclick=deleteImg("'+movie_imgs[i].filename+'","'+movie_imgs[i].seq+'")>&times;</button>'
                     +'</div>';
                     $(".movie_image_list").append(tag);
                 }
             }
+            $.ajax({
+                url:"/api/movie/delete/movie_img?seq="+seq,
+                type:"delete",
+                success:function(r){
+                    alert(r.message);
+                }
+            })
         }
     })
 }
-function deleteDescImg(filename){
+function deleteDescImg(filename, seq){
     if(!confirm("해당 콘텐츠 이미지를 삭제하시겠습니까?\n(주의:삭제된 데이터는 되돌릴 수 없습니다.)")) return;
     $.ajax({
         url:"/images/delete/movie_desc/"+filename,
@@ -204,6 +201,7 @@ function deleteDescImg(filename){
             alert(result.message);
             if(result.status) {
                 movie_desc_list = movie_desc_list.filter((desc)=>filename != desc.content);
+                console.log(movie_desc_list);
                 $(".description_list").html("");
                 for(let i = 0; i<movie_desc_list.length; i++){
                     //삭제 후 order넘버 재정렬 빠진 번호 제외한 데이터에서 order번호만 for문 속에서 i로 재정렬
@@ -241,7 +239,7 @@ function saveDescText(order){
     //     $("#text"+order).prop("disabled",true);
     // }
 }
-function deleteDescText(order){
+function deleteDescText(order, seq){
     if(!confirm("해당 콘텐츠 설명을 삭제하시겠습니까?\n(주의:삭제된 데이터는 되돌릴 수 없습니다.)")) return;
     movie_desc_list = movie_desc_list.filter((desc)=>order != desc.order);
     $(".description_list").html("");
