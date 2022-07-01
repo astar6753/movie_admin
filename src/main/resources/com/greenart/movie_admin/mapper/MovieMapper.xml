@@ -48,7 +48,7 @@
         (#{seq},#{order},#{content})
     </insert>
     <insert id="insertMovieStoryText">
-        INSERT INTO movie_stroy_text(mst_mi_seq,mst_order,mst_text)
+        INSERT INTO movie_story_text(mst_mi_seq,mst_order,mst_text)
         VALUES
         (#{seq},#{order},#{content})
     </insert>
@@ -100,7 +100,7 @@
             FROM movie_story_img a
             UNION ALL 
             SELECT *, 'text' AS type 
-                FROM movie_stroy_text b
+                FROM movie_story_text b
         )ab 
         WHERE mi_seq = #{seq}
         ORDER BY n_order ASC;
@@ -138,7 +138,7 @@
     <insert id="insertMovieStoryTextInfo"
         parameterType="com.greenart.movie_admin.data.movie.MovieStoryTextVO"
         useGeneratedKeys="true" keyProperty="mst_seq">
-        INSERT INTO movie_stroy_text
+        INSERT INTO movie_story_text
         (mst_mi_seq, mst_order, mst_text)
         VALUES
         (#{msi_mi_seq},#{msi_order},#{msi_file_name})
@@ -152,6 +152,30 @@
         (#{msi_mi_seq},#{msi_order},#{msi_file_name})
     </insert>
 
+    <delete id="deleteMovieStoryImgInfoByMovieSeq">
+        DELETE FROM movie_story_img WHERE msi_mi_seq = #{seq}
+    </delete>
+    <delete id="deleteMovieStoryTextInfoByMovieSeq">
+        DELETE FROM movie_story_text WHERE mst_mi_seq = #{seq}
+    </delete>
+
+    <select id="selectDescFileNameList" resultType="java.lang.String">
+        SELECT msi_file_name FROM movie_story_img WHERE msi_mi_seq = #{seq}
+    </select>
+    <update id="patchMovieBasicInfo">
+        UPDATE movie_info
+        SET 
+            mi_title = #{mi_title},
+            mi_genre_seq = #{mi_genre_seq},
+            mi_viewing_age = #{mi_viewing_age},
+            mi_showing_status = #{mi_showing_status},
+            mi_country = #{mi_country},
+            mi_year = #{mi_year},
+            mi_opening_dt = #{mi_opening_dt},
+            mi_ruuning_time = #{mi_ruuning_time}
+        WHERE mi_seq = #{mi_seq}
+    </update>
+    
 </mapper>
 
 

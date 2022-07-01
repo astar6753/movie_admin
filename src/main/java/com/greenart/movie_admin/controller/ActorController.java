@@ -34,5 +34,11 @@ public class ActorController {
 
         return "/actor/list";
     }
+
+    @GetMapping("/movie_role")
+    public String getActorMovieRole() {
+        return "/actor/movie_role";
+    }
+    
 }
 

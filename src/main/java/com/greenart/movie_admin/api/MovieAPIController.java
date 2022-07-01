@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -112,6 +113,40 @@ public class MovieAPIController {
         return m;
     }
 
+    @PatchMapping("/update/story")
+    @Transactional
+    public Map<String,Object> patchMovieStory(@RequestBody List<MovieDescRequest> data, @RequestParam Integer seq) {
+        Map<String,Object> m = new LinkedHashMap<String,Object>();
+
+        // for(String filename : movie_mapper.selectDescFileNameList(seq)) {
+        //     String filepath = "/movie/movie_desc/"+filename;
+        //     File deleteFile = new File(filepath);
+        //     if(deleteFile.exists()){
+        //         deleteFile.delete();
+        //     }
+        // }
+
+        //기존 데이터 DB에서 삭제
+        movie_mapper.deleteMovieStoryImgInfoByMovieSeq(seq);
+        movie_mapper.deleteMovieStoryTextInfoByMovieSeq(seq);
+
+        //화면에 있는 정보를 전체 넘겨서 DB에 insert
+        for(MovieDescRequest vo : data){
+            if(vo.getType().equals("img")) {
+                movie_mapper.insertMovieStoryImg(seq, vo.getContent(), vo.getOrder());
+            }
+            if(vo.getType().equals("text")) {
+                movie_mapper.insertMovieStoryText(seq, vo.getContent(), vo.getOrder());
+            }
+        }
+
+        m.put("status", true);
+        m.put("message", "변경사항이 수정되었습니다.");
+        return m;
+    }
+
+
+
     @DeleteMapping("/delete/{type}")
     public Map<String,Object> deleteMovieData(@PathVariable String type, @RequestParam Integer seq) {
         Map<String,Object> m = new LinkedHashMap<String,Object>();
@@ -166,5 +201,15 @@ public class MovieAPIController {
         return m;
 
     }
+
+    @PatchMapping("/update/basic")
+    public Map<String,Object> patchMovieinfo(@RequestBody MovieInfoVO data) {
+        Map<String,Object> m = new LinkedHashMap<String,Object>();
+        movie_mapper.patchMovieBasicInfo(data);
+        m.put("status", true);
+        m.put("message", "영화 기본 정보를 수정되었습니다.");
+        return m;
+    }
+
 }
 

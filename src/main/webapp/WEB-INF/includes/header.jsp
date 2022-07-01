@@ -28,6 +28,7 @@
         <a href="/movie/genre">장르 정보 관리</a>
         <a href="/actor/list">배우 정보 관리</a>
         <a href="/movie/list">영화 정보 관리</a>
+        <a href="/actor/movie_role">영화 배역 정보 관리</a>
     </header>
 </body>
 </html>

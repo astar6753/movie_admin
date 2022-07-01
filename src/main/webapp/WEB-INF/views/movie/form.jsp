@@ -110,11 +110,12 @@
             </div>
         </div>
         <div class="movie_description_area">
+            <h1>영화 스토리 콘텐츠 추가</h1>
             <form id="desc_img_form">
                 <input type="file" name="file" id="desc_img_select" hidden accept="image/gif, image/jpeg, image/png">
             </form>
             <button id="img_add" onclick="document.getElementById('desc_img_select').click()">이미지 추가</button>
-            <button id="text_add">영화 스토리 콘텐츠 추가</button>
+            <button id="text_add">설명 추가</button>
             <div class="description_list">
                 <!-- <%-- <div class="desc_img_box">
                     <img src="http://placekitten.com/960/540">
