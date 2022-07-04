@@ -70,6 +70,7 @@
         <if test="country !=null">
             and mi_country = #{country}
         </if>
+        ORDER BY mi_opening_dt DESC
         limit 10 offset #{offset}
     </select>
     <select id="selectMoviePageCnt" resultType="java.lang.Integer">

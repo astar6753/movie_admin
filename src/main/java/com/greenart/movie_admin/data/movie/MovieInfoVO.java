@@ -19,4 +19,5 @@ public class MovieInfoVO {
     // /movie/list에서 사용
     private String genre_name;
     private String poster_img;
+    private Integer actor_count;
 }

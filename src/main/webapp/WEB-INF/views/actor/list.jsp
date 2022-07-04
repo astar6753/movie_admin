@@ -74,11 +74,11 @@
             </c:forEach>
         </div>
         <div class="pager_area">
-            <%--
+            <!-- <%--
             <c:forEach begin="1" end="${pageCount}" var="i">
                 <a href="/actor/list?page=${i}">${i}</a>
             </c:forEach>
-            --%>
+            --%> -->
             <c:forEach items="${pagerURL}" var="url" varStatus="stat">
                 <a href="${url}"
                     <c:if test="${page == stat.count}">class = "current"</c:if>

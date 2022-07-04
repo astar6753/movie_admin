@@ -25,6 +25,11 @@
 </head>
 <body>
     <header>
+        <a href="/admin/list">관리자 계정 목록 관리</a>
+        -관리자 등록(아이디 비밀번호 이름 역할)(비밀번호 암호화)
+        -관리자 정보 수정(비밀번호 이름 역할)
+        -관리자 정보 삭제(seq번호로 즉시삭제 confirm을 거치도로 구성)
+        <a href="/admin/history">관리자 접속 기록 관리</a>
         <a href="/movie/genre">장르 정보 관리</a>
         <a href="/actor/list">배우 정보 관리</a>
         <a href="/movie/list">영화 정보 관리</a>

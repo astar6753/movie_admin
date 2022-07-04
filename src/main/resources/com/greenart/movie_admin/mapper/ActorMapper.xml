@@ -41,6 +41,70 @@
         </foreach>
     </insert>
     
+    <select id="selectActorRoleCntInfo" resultType="com.greenart.movie_admin.data.movie.MovieInfoVO">
+        SELECT 
+            mi_seq, mi_title, mi_country, mi_year,
+            (
+                SELECT COUNT(*) FROM movie_actor_casting_info 
+                WHERE maci_mi_seq = mi_seq
+            ) AS actor_count 
+            FROM movie_info
+            WHERE mi_title like '%${keyword}%'
+                <if test="country != null">
+                and mi_country = #{country}
+                </if>
+            ORDER BY mi_opening_dt DESC 
+            LIMIT 10 OFFSET #{offset}
+    </select>
+    <select id="selectActorRoleCntInfoPageCount" resultType="java.lang.Integer">
+        SELECT CEIL(COUNT(*)/10) 
+        FROM movie_info
+        WHERE  mi_title like '%${keyword}%'
+        <if test="country != null">
+            and mi_country = #{country}
+        </if>
+        ORDER BY mi_opening_dt DESC
+    </select>
+    <select id="selectActorRoleInfo" resultType="com.greenart.movie_admin.data.actor.ActorRoleInfoVO">
+        SELECT a.*, b.cai_name, b.cai_country, c.cap_file_name 
+        FROM movie_actor_casting_info a 
+        INNER JOIN cinema_actor_info b
+            ON a.maci_cai_seq = b.cai_seq
+        INNER JOIN cinema_actor_photo c
+            ON b.cai_seq = c.cap_cai_seq
+        WHERE a.maci_mi_seq = #{seq}
+    </select>
+
+    <select id="wefjifeokepof" resultType="java.lang.Integer">
+        SELECT  CEIL(COUNT(*)/10) 
+        FROM movie_actor_casting_info 
+        WHERE maci_mi_seq = #{seq}
+        <if test="country != null">
+            and mi_country = #{country}
+        </if>
+        ORDER BY mi_opening_dt DESC 
+        LIMIT 10 OFFSET #{offset}
+    </select>
+
+
+
+    <insert id="insertActorRoleInfo">
+        INSERT INTO movie_actor_casting_info
+        (maci_cai_seq,maci_mi_seq,maci_casting_name,maci_role)
+        VALUES
+        (#{maci_cai_seq},#{maci_mi_seq},#{maci_casting_name},#{maci_role})
+    </insert>
+    <delete id="deleteActorRoleInfoBySeq">
+        DELETE FROM movie_actor_casting_info WHERE maci_seq = #{seq}
+    </delete>
+    <update id="updateActorRoleInfo">
+        UPDATE movie_actor_casting_info
+        SET maci_casting_name=#{maci_casting_name},
+            maci_role=#{maci_role}
+        WHERE maci_seq = #{maci_seq}
+    </update>
+
+
 </mapper>
 
 
