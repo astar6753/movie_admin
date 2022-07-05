@@ -2,31 +2,12 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.greenart.movie_admin.mapper.HistoryMapper">
 
-    <select id="select##" resultType="com.greenart.movie_admin.data.history.##VO">
-        SELECT * FROM admin_account_info
-    </select>
-    <insert id="insert##">
-        INSERT INTO admin_account_info
-        ($$_id, $$_pwd, $$_name, $$_role)
+    <insert id="insertAdminHistory">
+        INSERT INTO admin_access_history
+        (aah_aai_seq,aah_ip,aah_start,aah_url)
         VALUES
-        (#{$$_id}, #{$$_pwd}, #{$$_name}, #{$$_role})
+        (#{aah_aai_seq},#{aah_ip},#{aah_start},#{aah_url})
     </insert>
-
-    <delete id="delete##">
-        DELETE FROM admin_account_info WHERE $$_seq = #{$$_seq}
-    </delete>
-    
-    <update id="update##">
-        UPDATE admin_account_info
-        SET
-            $$_id = #{data.$$_id},
-            $$_pwd = #{data.$$_pwd},
-            $$_name = #{data.$$_name},
-            $$_role = #{data.$$_role}
-        WHERE
-            $$_seq = #{$$_seq}
-    </update>
-
     
 </mapper>
 

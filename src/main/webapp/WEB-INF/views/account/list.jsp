@@ -58,40 +58,40 @@
                 <h1>관리자 추가</h1>
                 <table>
                     <tbody>
-	                    <tr>
-	                        <td>아이디</td>
-	                        <td>
-	                            <input type="text" id="aai_id">
-	                        </td>
-	                    </tr>
-	                    <tr>
-	                        <td>비밀번호</td>
-	                        <td>
-	                            <input type="password" id="aai_pwd">
-	                        </td>
-	                    </tr>
-	                    <tr>
-	                        <td>이름</td>
-	                        <td>
-	                            <input type="text" id="aai_name">
-	                        </td>
-	                    </tr>
-	                    <tr>
-	                        <td>관리자 유형</td>
-	                        <td>
-	                            <select id="aai_role">
-	                                <option value="1">일반관리자</option>
-	                                <option value="2">전체관리자</option>
-	                                <option value="99">슈퍼유저</option>
-	                            </select>
-	                        </td>
-	                    </tr>
-	                    <tr>
-	                        <td colspan="2">
-	                            <button id="save_account">등록</button>
-	                            <button id="save_cancel">취소</button>
-	                        </td>
-	                    </tr>
+						<tr>
+							<td>아이디</td>
+							<td>
+								<input type="text" id="aai_id">
+							</td>
+						</tr>
+						<tr>
+							<td>비밀번호</td>
+							<td>
+								<input type="password" id="aai_pwd">
+							</td>
+						</tr>
+						<tr>
+							<td>이름</td>
+							<td>
+								<input type="text" id="aai_name">
+							</td>
+						</tr>
+						<tr>
+							<td>관리자 유형</td>
+							<td>
+								<select id="aai_role">
+									<option value="1">일반관리자</option>
+									<option value="2">전체관리자</option>
+									<option value="99">슈퍼유저</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<button id="save_account">등록</button>
+								<button id="save_cancel">취소</button>
+							</td>
+						</tr>
                     </tbody>
                 </table>
             </div>
@@ -101,40 +101,40 @@
                 <h1>관리자 수정</h1>
                 <table>
                     <tbody>
-	                    <tr>
-	                        <td>아이디</td>
-	                        <td>
-	                            <input type="text" id="mod_aai_id">
-	                        </td>
-	                    </tr>
-	                    <tr>
-	                        <td>비밀번호</td>
-	                        <td>
-	                            <input type="password" id="mod_aai_pwd">
-	                        </td>
-	                    </tr>
-	                    <tr>
-	                        <td>이름</td>
-	                        <td>
-	                            <input type="text" id="mod_aai_name">
-	                        </td>
-	                    </tr>
-	                    <tr>
-	                        <td>관리자 유형</td>
-	                        <td>
-	                            <select id="mod_aai_role">
-	                                <option value="1">일반관리자</option>
-	                                <option value="2">전체관리자</option>
-	                                <option value="99">슈퍼유저</option>
-	                            </select>
-	                        </td>
-	                    </tr>
-	                    <tr>
-	                        <td colspan="2">
-	                            <button id="mod_account">수정</button>
-	                            <button id="mod_cancel">취소</button>
-	                        </td>
-	                    </tr>
+						<tr>
+							<td>아이디</td>
+							<td>
+								<input type="text" id="mod_aai_id">
+							</td>
+						</tr>
+						<tr>
+							<td>비밀번호</td>
+							<td>
+								<input type="password" id="mod_aai_pwd">
+							</td>
+						</tr>
+						<tr>
+							<td>이름</td>
+							<td>
+								<input type="text" id="mod_aai_name">
+							</td>
+						</tr>
+						<tr>
+							<td>관리자 유형</td>
+							<td>
+								<select id="mod_aai_role">
+									<option value="1">일반관리자</option>
+									<option value="2">전체관리자</option>
+									<option value="99">슈퍼유저</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<button id="mod_account">수정</button>
+								<button id="mod_cancel">취소</button>
+							</td>
+						</tr>
                     </tbody>
                 </table>
             </div>

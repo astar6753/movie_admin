@@ -43,6 +43,10 @@
         WHERE aai_seq = #{seq}
     </select>
 
+    <select id="loginUser" resultType="com.greenart.movie_admin.data.account.AdminAccountInfoVO">
+        SELECT aai_seq, aai_id, aai_name, aai_role FROM admin_account_info
+        WHERE aai_id = #{aai_id} and aai_pwd = #{aai_pwd}
+    </select>
 </mapper>
 
 

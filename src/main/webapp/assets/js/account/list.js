@@ -76,23 +76,20 @@ $(function(){
     })
 
     $("#mod_account").click(function(){
-        let id = $("#mod_aai_id").val();
         let pwd = $("#mod_aai_pwd").val();
         let name = $("#mod_aai_name").val();
-        if(isEmpty(id)){alert("아이디를 올바르게 입력하세요"); return;}
         if(isEmpty(pwd)){alert("비밀번호를 올바르게 입력하세요"); return;}
         if(isEmpty(name, false)){alert("이름을 올바르게 입력하세요"); return;}
         
         let data = {
             aai_seq:$(this).attr("data-seq"),
-            aai_id:id,
             aai_pwd:pwd,
             aai_name:name,
             aai_role:$("#mod_aai_role option:selected").val()
         }
 
         $.ajax({
-            url:"/api/account/patch",
+            url:"/api/account/update",
             type:"patch",
             contentType:"application/json",
             data:JSON.stringify(data),
