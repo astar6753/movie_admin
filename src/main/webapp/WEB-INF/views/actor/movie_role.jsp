@@ -1,15 +1,12 @@
 <%@page language ="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/includes/header.jsp"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <script src="/assets/js/actor/movie_role.js"></script>
-    <link rel="stylesheet" href="/assets/css/actor/actor_role.css">
     <title>Document</title>
+    <script src="/assets/js/actor/movie_role.js"></script>
+    <link rel="stylesheet" href="/assets/css/actor/movie_role.css">
 </head>
 <body>
     <main>
@@ -27,21 +24,21 @@
                         <span>${item.mi_year}</span>
                         <span>${item.mi_country}</span>
                     </div>
-                </div>
-                <h2>${item.mi_title}</h2>
-                <p>
-                    <span>등록 배우 :</span>
-                    <span class="actor_count">${item.actor_count}</span>
-                </p>
-                <div class="button_area">
-                    <button class="modify" data-seq="${item.mi_seq}" data-title="${item.mi_title}">배역 정보 수정</button>
+                    <h2>${item.mi_title}</h2>
+                    <p>
+                        <span>등록 배우 : </span>
+                        <span class="actor_count">${item.actor_count}</span>
+                    </p>
+                    <div class="button_area">
+                        <button class="modify" data-seq="${item.mi_seq}" data-title="${item.mi_title}">배역 정보</button>
+                    </div>
                 </div>
             </c:forEach>
         </div>
 
         <div class="actor_role_list_popup">
             <div class="actor_role_list_box">
-                <button id="actor_list_close">&times;</button>
+                <button id="actor_role_list_close">&times;</button>
                 <button id="actor_add">배역 추가</button>
                 <div class="actor_role_list">
                     <h2></h2>
@@ -58,7 +55,7 @@
             </div>
         </div>
 
-        <div class="actor_add_popup" style="display: none; border: 1px solid #000;">
+        <div class="actor_add_popup" style="display: none; border: 1px solid #000">
             <div class="actor_add_form">
                 <p>배우</p>
                 <input type="text" id="actor_name">
@@ -74,8 +71,8 @@
             </div>
         </div>
 
-        <div class="actor_mod_popup" style="display: none; border: 1px solid #000;">
-            <div class="actor_mod_form">
+        <div class="actor_modify_popup" style="display:none; border:1px solid #000">
+            <div class="actor_modify_form">
                 <p>배우</p>
                 <input type="text" id="actor_mod_name">
                 <p>배역 명</p>
@@ -90,7 +87,7 @@
             </div>
         </div>
 
-        <div class="actor_search_popup" style="display: none; border: 1px solid #000;">
+        <div class="actor_search_popup" style="display: none; border: 1px solid #000">
             <div class="actor_search_form">
                 <h2>배우 검색</h2>
                 <input type="text" id="actor_search_keyword">
@@ -117,23 +114,22 @@
                     </table>
                 </div>
                 <div class="actor_search_pager_area">
-                    <a href="/api/actor/actor_list?keyword="+keyword+"&page="+page">1</a>
-                    <button class="actor_pager"></button>
                 </div>
             </div>
         </div>
-
+	
+	
+	
         <div class="pager_area">
             <c:forEach begin="1" end="${pageCount}" var="i">
+                <c:if test="${country != null}">
+                    <a href="/actor/movie_role?page=${i}&keyword=${keyword}&country=${country}">${i}</a>
+                </c:if>
                 <c:if test="${country == null}">
                     <a href="/actor/movie_role?page=${i}&keyword=${keyword}">${i}</a>
                 </c:if>
-                <c:if test="${country != null}">
-                    <a href="/actor/movie_role?page=${i}&keyword=${keyword}&country=${country}">${i}</a>
-                </c:if>            
             </c:forEach>
         </div>
-
     </main>
 </body>
 </html>

@@ -187,7 +187,7 @@ $(function(){
             mi_country: $("#movie_country").val(),
             mi_year: $("#movie_year").val(),
             mi_opening_dt: $("#opening_dt").val(),
-            mi_ruuning_time: $("#running_time").val()
+            mi_running_time: $("#running_time").val()
         }
         console.log(data);
         $.ajax({

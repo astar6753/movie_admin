@@ -2,32 +2,47 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.greenart.movie_admin.mapper.AccountMapper">
 
-    <select id="select##" resultType="com.greenart.movie_admin.data.account.##VO">
-        SELECT * FROM admin_account_info
+    <select id="selectAdminAccountList" resultType="com.greenart.movie_admin.data.account.AdminAccountInfoVO">
+        SELECT aai_seq, aai_id, aai_name, aai_role FROM admin_account_info
+        WHERE aai_id LIKE '%${keyword}%' LIMIT 10 OFFSET #{offset}
     </select>
-    <insert id="insert##">
-        INSERT INTO admin_account_info
-        ($$_id, $$_pwd, $$_name, $$_role)
-        VALUES
-        (#{$$_id}, #{$$_pwd}, #{$$_name}, #{$$_role})
-    </insert>
 
-    <delete id="delete##">
-        DELETE FROM admin_account_info WHERE $$_seq = #{$$_seq}
-    </delete>
+    <select id="selectAdminAccountInfoCnt" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM admin_account_info
+        WHERE aai_id LIKE '%${keyword}%'
+    </select>
+
+    <select id="selectAdminAccountPageCnt" resultType="java.lang.Integer">
+        SELECT CEIL(COUNT(*)/10) FROM admin_account_info
+        WHERE aai_id LIKE '%${keyword}%'
+    </select>
+
+    <insert id="insertAdminAccount">
+        INSERT INTO admin_account_info
+        (aai_id, aai_pwd, aai_name, aai_role)
+        VALUES
+        (#{aai_id}, #{aai_pwd}, #{aai_name}, #{aai_role})
+    </insert>
     
-    <update id="update##">
+    <update id="updateAdminAccount">
         UPDATE admin_account_info
         SET
-            $$_id = #{data.$$_id},
-            $$_pwd = #{data.$$_pwd},
-            $$_name = #{data.$$_name},
-            $$_role = #{data.$$_role}
+            aai_pwd = #{aai_pwd},
+            aai_name = #{aai_name},
+            aai_role = #{aai_role}
         WHERE
-            $$_seq = #{$$_seq}
+            aai_seq = #{aai_seq}
     </update>
 
+    <delete id="deleteAdminAccount">
+        DELETE FROM admin_account_info WHERE aai_seq = #{aai_seq}
+    </delete>
     
+    <select id="selectAdminBySeq" resultType="com.greenart.movie_admin.data.account.AdminAccountInfoVO">
+        SELECT aai_seq, aai_id, aai_name, aai_role FROM admin_account_info
+        WHERE aai_seq = #{seq}
+    </select>
+
 </mapper>
 
 

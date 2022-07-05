@@ -125,7 +125,7 @@ $(function(){
                 mi_genre_seq:$("#genre_info option:selected").val(),
                 mi_title:$("#movie_name").val(),
                 mi_viewing_age:$("#viewing_age option:selected").val(),
-                mi_ruuning_time:$("#running_time").val(),
+                mi_running_time:$("#running_time").val(),
                 mi_country:$("#movie_country").val(),
                 mi_opening_dt:$("#opening_dt").val(),
                 mi_showing_status:$("#movie_status option:selected").val(),

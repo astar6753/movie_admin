@@ -14,9 +14,8 @@ public class MovieInfoVO {
     private String mi_country;
     private Integer mi_year;
     private Date mi_opening_dt;
-    private Integer mi_ruuning_time;
+    private Integer mi_running_time;
 
-    // /movie/list에서 사용
     private String genre_name;
     private String poster_img;
     private Integer actor_count;

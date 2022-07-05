@@ -1,1 +1,24 @@
-header {padding: 30px; border-bottom: 1px solid #000;}
+header {padding:15px 30px; position: relative; text-align: center;
+min-width:1280px;}
+.header_links {
+    display: inline-block;
+    background-color: #fff;
+    font-size: 0;
+}
+.header_links a {
+    display: inline-block; color: #999; text-decoration: none; 
+    font-size: 14px; padding:10px; background-color: #fff;
+    border-top: 1px solid #bbb; font-weight: 500;
+    border-bottom: 1px solid #bbb;
+}
+.header_links a.current {
+    background-color: #333; color: #fff;
+}
+.header_links a:first-child {
+    border-radius: 5px 0 0 5px;
+    border-left: 1px solid #bbb;
+}
+.header_links a:last-child {
+    border-radius: 0 5px 5px 0;
+    border-right: 1px solid #bbb;
+}

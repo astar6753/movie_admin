@@ -1,7 +1,7 @@
 let actor_keyword = '';
 
 $(function() {
-    $("#actor_list_close").click(function(){ $(".actor_role_list_popup").hide(); });
+    $("#actor_role_list_close").click(function(){ $(".actor_role_list_popup").hide(); })
     $(".modify").click(function() {
         $(".actor_role_list_popup").show();
         let seq = $(this).attr("data-seq");
@@ -42,7 +42,7 @@ $(function() {
                     $("#mod_role"+$(this).attr("data-role")).attr("checked",true);
                     //0704 8줄>4줄 축약
                     $("#actor_mod_name").prop("disabled",true);
-                    $(".actor_mod_popup").show();
+                    $(".actor_modify_popup").show();
                 })
                 $(".actor_role_delete").click(function() {
                     if(!confirm("배역 정보를 삭제하시겠습니까?\n(이 작업은 되돌릴 수 없습니다.)"))return;
@@ -71,7 +71,7 @@ $(function() {
     })
     $("#actor_search_button").click(function() {
         actor_keyword = $("#actor_search_keyword").val();
-        getActorList(actor_keyword,'');
+        getActorList(actor_keyword, 1);
     })
     $("#actor_role_save").click(function(){
         let data = {
@@ -80,7 +80,6 @@ $(function() {
             maci_casting_name:$("#actor_role_name").val(),
             maci_role:$(".role_type:checked").val()
         }
-        console.log(JSON.stringify(data));
         $.ajax({
             url:"/api/actor/actor_role/add",
             type:"put",
@@ -95,15 +94,15 @@ $(function() {
     $("#actor_role_cancel").click(function() {
         if(!confirm("배역 정보 추가를 취소하시겠습니까?\n(입력된 정보는 저장되지 않습니다.)"))return;
         $(".actor_add_popup").hide();
-        $(".actor_name").val("");
-        $(".actor_name").attr("data-seq",null);
-        $(".actor_role_name").val("");
+        $("#actor_name").val("");
+        $("#actor_name").attr("data-seq",null);
+        $("#actor_role_name").val("");
         $("#role2").prop("checked",true);
     })
     
     $("#actor_mod_role_cancel").click(function() {
         if(!confirm("배역 정보 수정을 취소하시겠습니까?\n(입력된 정보는 저장되지 않습니다.)"))return;
-        $(".actor_mod_popup").hide();
+        $(".actor_modify_popup").hide();
 
         $("#actor_mod_name").attr("data-seq","");
         $("#actor_mod_name").val("");
@@ -111,7 +110,7 @@ $(function() {
         $("#mod_role2").attr("checked",true);
 
         // $("#actor_mod_name").prop("disabled",true);
-    })
+    });
     $("#actor_mod_role_save").click(function() {
         let data = {
             maci_seq:$("#actor_mod_name").attr("data-seq"),

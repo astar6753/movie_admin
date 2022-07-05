@@ -1,3 +1,8 @@
+main > h1 {text-align: center;}
+main > div {
+    width:1100px; margin:0 auto;
+}
+
 .movie_img {
     display: inline-block; vertical-align: top; height: 200px; position: relative;
     border: 1px solid #000; margin-right: 10px;

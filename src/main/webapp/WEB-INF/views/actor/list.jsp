@@ -1,21 +1,30 @@
 <%@page language ="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/includes/header.jsp"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/assets/css/actor/list.css">
-    <script src="/assets/js/actor/list.js"></script>
     <title>Document</title>
+    <link rel="stylesheet" href="/assets/css/actor/list.css">
+    <script>
+        $(function(){
+            $(".actor_add_box").draggable({
+                handle:".popup_title"
+            })
+        })
+    </script>
+    <script src="/assets/js/actor/list.js"></script>
 </head>
 <body>
     <main>
         <h1>영화 배우 관리</h1>
-        <button id="actor_add">배우 정보 추가</button>
+        <button id="actor_add">
+            <i class="fas fa-plus-square"></i>
+            <span>배우 정보 추가</span>
+        </button>
         <div class="actor_add_popup">
             <div class="actor_add_box">
+                <h1 class="popup_title">배우 정보 추가</h1>
                 <div class="actor_info">
                     <span>배우 이름</span>
                     <input type="text" id="actor_name" placeholder="배우 이름을 입력하세요(한글)">
@@ -35,7 +44,7 @@
                     </div>
                 </div>
                 <button type="button" id="add_actor">배우정보 추가</button>
-                <button type="button" id="close_popup">취소</button>
+                <button type="button" id="close_popup">&times;</button>
             </div>
         </div>
         <div class="actor_list_header">
@@ -52,25 +61,25 @@
                 </c:if>
                 <c:forEach items="${countryURL}" var="item">
                     <a href="${item.url}"
-                        <c:if test="${country == item.country}">class = "current"</c:if>
+                        <c:if test="${country == item.country}"> class = "current"</c:if>
                     >${item.country}</a>
                 </c:forEach>
             </div>
-            <form action="/actor/list" method="get">
-                <input type="text" name="keyword" placeholder="배우 이름 검색" value="${keyword}">
-                <button type="submit">검색</button>
-            </form>
-        </div>        
+            <div class="search_box">
+                <form action="/actor/list" method="get">
+                    <input type="text" name="keyword" placeholder="배우 이름 검색" value="${keyword}">
+                    <button type="submit">검색</button>
+                </form>
+            </div>
+        </div>
         <div class="actor_list_wrap">
-            <c:forEach items="${list}" var="item">
+            <c:forEach items="${list}" var="item" varStatus="stat">
                 <a href="/actor/detail?actor_no=${item.cai_seq}" class="actor_list_item">
                     <div class="actor_img" style="background-image: url('/images/actor/${item.photo}');"></div>
-                    <p>
-                        <span>${item.cai_name}</span>
-                        <span>|</span>
-                        <span>${item.cai_country}</span>
-                    </p>
+                    <p class="country">${item.cai_country}</p>
+                    <p class="name">${item.cai_name}</p>
                 </a>
+                <c:if test="${stat.count % 5 == 0}"><br></c:if>
             </c:forEach>
         </div>
         <div class="pager_area">

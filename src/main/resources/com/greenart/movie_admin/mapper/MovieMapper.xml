@@ -30,10 +30,10 @@
         useGeneratedKeys="true" keyProperty="mi_seq">
         INSERT INTO movie_info
         (mi_genre_seq, mi_title, mi_viewing_age, mi_showing_status, 
-        mi_country, mi_year, mi_opening_dt, mi_ruuning_time)
+        mi_country, mi_year, mi_opening_dt, mi_running_time)
         VALUES
         (#{mi_genre_seq},#{mi_title},#{mi_viewing_age},#{mi_showing_status},
-        #{mi_country},#{mi_year},#{mi_opening_dt},#{mi_ruuning_time})
+        #{mi_country},#{mi_year},#{mi_opening_dt},#{mi_running_time})
     </insert>
     <insert id="insertMovieImage">
         INSERT INTO movie_image(mimg_mi_seq,mimg_order,mimg_file_name)
@@ -173,7 +173,7 @@
             mi_country = #{mi_country},
             mi_year = #{mi_year},
             mi_opening_dt = #{mi_opening_dt},
-            mi_ruuning_time = #{mi_ruuning_time}
+            mi_running_time = #{mi_running_time}
         WHERE mi_seq = #{mi_seq}
     </update>
     

@@ -11,7 +11,7 @@
         let movie_seq = '${movieInfo.mi_seq}'
     </script>
     <script src="/assets/js/movie/modify.js"></script>
-        
+    <c:if test="${mode == 'modify'}">        
     <script>
         let genre_no = '${movieInfo.mi_genre_seq}';
         let viewing_age = '${movieInfo.mi_viewing_age}';
@@ -46,70 +46,71 @@
             });
         </script>
     </c:forEach>
-
+        
+    </c:if>
     <link rel="stylesheet" href="/assets/css/movie/form.css">
 </head>
 <body>
     <main>
         <h1>영화 정보 <span class="type">추가</span></h1>
-        
-        <button id="edit_basic">영화 기본정보 편집</button>
-        <button id="edit_basic_save" disabled>편집내용 저장</button>
-        
         <div class="basic_info">
             <h1>영화 기본 정보</h1>
+	    <button id="edit_basic">영화 기본정보 편집</button>
+	    <button id="edit_basic_save" disabled>편집내용 저장</button>
             <table>
-                <tr>
-                    <td>장르</td>
-                    <td>
-                        <select id="genre_info">
-                            <c:forEach items ="${genreList}" var="genre">
-                                <option value="${genre.genre_seq}">${genre.genre_name}</option>
-                            </c:forEach>
-                        </select>
-                    </td>
-                    <td>제목</td>
-                    <td>
-                        <input type="text" id="movie_name" value="${movieInfo.mi_title}">
-                    </td>
-                    <td>관람연령</td>
-                    <td>
-                        <select id="viewing_age">
-                            <option value="0">전체관람가</option>
-                            <option value="12">12세 이상</option>
-                            <option value="15">15세 이상</option>
-                            <option value="19">19세 이상</option>
-                        </select>
-                    </td>
-                    <td>상영시간</td>
-                    <td>
-                        <input type="text" id="running_time" value="${movieInfo.mi_ruuning_time}"><span>분</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>국가</td>
-                    <td>
-                        <input type="text" id="movie_country" value="${movieInfo.mi_country}">
-                    </td>
-                    <td>개봉일</td>
-                    <td>
-                        <input type="text" id="opening_dt" value="<fmt:formatDate value = 
-                        "${movieInfo.mi_opening_dt}" pattern = "yyyy-MM-dd"/>"
-                        >
-                    </td>
-                    <td>상영여부</td>
-                    <td>
-                        <select id="movie_status">
-                            <option value="0">미개봉</option>
-                            <option value="1">상영중</option>
-                            <option value="2">스트리밍</option>
-                        </select>
-                    </td>
-                    <td>연도</td>
-                    <td>
-                        <input type="text" id="movie_year" value="${movieInfo.mi_year}">
-                    </td>
-                </tr>
+                <tbody>
+	                <tr>
+	                    <td>장르</td>
+	                    <td>
+	                        <select id="genre_info">
+	                            <c:forEach items ="${genreList}" var="genre">
+	                                <option value="${genre.genre_seq}">${genre.genre_name}</option>
+	                            </c:forEach>
+	                        </select>
+	                    </td>
+	                    <td>제목</td>
+	                    <td>
+	                        <input type="text" id="movie_name" value="${movieInfo.mi_title}">
+	                    </td>
+	                    <td>관람연령</td>
+	                    <td>
+	                        <select id="viewing_age">
+	                            <option value="0">전체관람가</option>
+	                            <option value="12">12세 이상</option>
+	                            <option value="15">15세 이상</option>
+	                            <option value="19">19세 이상</option>
+	                        </select>
+	                    </td>
+	                    <td>상영시간</td>
+	                    <td>
+	                        <input type="text" id="running_time" value="${movieInfo.mi_running_time}"><span>분</span>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td>국가</td>
+	                    <td>
+	                        <input type="text" id="movie_country" value="${movieInfo.mi_country}">
+	                    </td>
+	                    <td>개봉일</td>
+	                    <td>
+	                        <input type="text" id="opening_dt" value="<fmt:formatDate value = 
+	                        "${movieInfo.mi_opening_dt}" pattern = "yyyy-MM-dd"/>"
+	                        >
+	                    </td>
+	                    <td>상영여부</td>
+	                    <td>
+	                        <select id="movie_status">
+	                            <option value="0">미개봉</option>
+	                            <option value="1">상영중</option>
+	                            <option value="2">스트리밍</option>
+	                        </select>
+	                    </td>
+	                    <td>연도</td>
+	                    <td>
+	                        <input type="text" id="movie_year" value="${movieInfo.mi_year}">
+	                    </td>
+	                </tr>
+                </tbody>
             </table>
         </div>
         <div class="movie_image_area">
@@ -179,7 +180,7 @@
         </div>
         <div class="movie_description_area">
             <h1>영화 스토리 콘텐츠 </h1>
-            <button id="story_edit">영화 스토리 콘텐츠 편집</button>
+            <button id="story_edit">스토리 콘텐츠 편집</button>
             <button id="story_save">변경내용 저장</button>
             <form id="desc_img_form">
                 <input type="file" name="file" id="desc_img_select" hidden accept="image/gif, image/jpeg, image/png">
@@ -212,7 +213,7 @@
                         </div>
                     </c:if>
                 </c:forEach>
-
+		
             </div> 
         </div>
     </main>
