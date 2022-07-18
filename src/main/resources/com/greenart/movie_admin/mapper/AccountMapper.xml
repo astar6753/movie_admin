@@ -16,7 +16,7 @@
         SELECT CEIL(COUNT(*)/10) FROM admin_account_info
         WHERE aai_id LIKE '%${keyword}%'
     </select>
-
+    
     <insert id="insertAdminAccount">
         INSERT INTO admin_account_info
         (aai_id, aai_pwd, aai_name, aai_role)

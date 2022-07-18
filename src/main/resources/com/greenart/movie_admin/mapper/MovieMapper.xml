@@ -61,23 +61,26 @@
     </insert>
 
     <select id="selectMovieList" resultType="com.greenart.movie_admin.data.movie.MovieInfoVO">
-        SELECT a.*,b.genre_name, c.mimg_file_name as poster_img FROM movie_info a
-        LEFT outer join genre_info b 
-            ON a.mi_genre_seq = b.genre_seq
-	    LEFT outer join (SELECT * FROM movie_image WHERE mimg_is_poster=1)c 
-            ON a.mi_seq = c.mimg_mi_seq
+        SELECT a.*,b.genre_name, (
+            SELECT mimg_file_name FROM movie_image
+            WHERE mimg_mi_seq = a.mi_seq  AND mimg_is_poster=1
+            ORDER BY mimg_seq DESC
+            LIMIT 1
+        ) AS poster_img 
+        FROM movie_info a LEFT outer join genre_info b 
+        ON a.mi_genre_seq = b.genre_seq
         WHERE mi_title like '%${keyword}%'
         <if test="country !=null">
-            and mi_country = #{country}
+            AND mi_country = #{country}
         </if>
         ORDER BY mi_opening_dt DESC
-        limit 10 offset #{offset}
+        LIMIT 10 OFFSET #{offset}
     </select>
     <select id="selectMoviePageCnt" resultType="java.lang.Integer">
-        SELECT ceil(count(*)/20) FROM movie_info
+        SELECT ceil(count(*)/10) FROM movie_info
         WHERE mi_title like '%${keyword}%'
         <if test="country !=null">
-            and mi_country = #{country}
+            AND mi_country = #{country}
         </if>
     </select>
 

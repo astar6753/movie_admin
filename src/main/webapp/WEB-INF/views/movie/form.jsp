@@ -17,55 +17,55 @@
             <h1>영화 기본 정보</h1>
             <table>
                 <tbody>
-	                <tr>
-	                    <td>장르</td>
-	                    <td>
-	                        <select id="genre_info">
-	                            <c:forEach items ="${genreList}" var="genre">
-	                                <option value="${genre.genre_seq}">${genre.genre_name}</option>
-	                            </c:forEach>
-	                        </select>
-	                    </td>
-	                    <td>제목</td>
-	                    <td>
-	                        <input type="text" id="movie_name">
-	                    </td>
-	                    <td>관람연령</td>
-	                    <td>
-	                        <select id="viewing_age">
-	                            <option value="0">전체관람가</option>
-	                            <option value="12">12세 이상</option>
-	                            <option value="15">15세 이상</option>
-	                            <option value="19">19세 이상</option>
-	                        </select>
-	                    </td>
-	                    <td>상영시간</td>
-	                    <td>
-	                        <input type="text" id="running_time"><span>분</span>
-	                    </td>
-	                </tr>
-	                <tr>
-	                    <td>국가</td>
-	                    <td>
-	                        <input type="text" id="movie_country">
-	                    </td>
-	                    <td>개봉일</td>
-	                    <td>
-	                        <input type="text" id="opening_dt">
-	                    </td>
-	                    <td>상영여부</td>
-	                    <td>
-	                        <select id="movie_status">
-	                            <option value="0">미개봉</option>
-	                            <option value="1">상영중</option>
-	                            <option value="2">스트리밍</option>
-	                        </select>
-	                    </td>
-	                    <td>연도</td>
-	                    <td>
-	                        <input type="text" id="movie_year">
-	                    </td>
-	                </tr>
+                    <tr>
+                        <td>장르</td>
+                        <td>
+                            <select id="genre_info">
+                                <c:forEach items ="${genreList}" var="genre">
+                                    <option value="${genre.genre_seq}">${genre.genre_name}</option>
+                                </c:forEach>
+                            </select>
+                        </td>
+                        <td>제목</td>
+                        <td>
+                            <input type="text" id="movie_name">
+                        </td>
+                        <td>관람연령</td>
+                        <td>
+                            <select id="viewing_age">
+                                <option value="0">전체관람가</option>
+                                <option value="12">12세 이상</option>
+                                <option value="15">15세 이상</option>
+                                <option value="19">19세 이상</option>
+                            </select>
+                        </td>
+                        <td>상영시간</td>
+                        <td>
+                            <input type="text" id="running_time"><span>분</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>국가</td>
+                        <td>
+                            <input type="text" id="movie_country">
+                        </td>
+                        <td>개봉일</td>
+                        <td>
+                            <input type="text" id="opening_dt">
+                        </td>
+                        <td>상영여부</td>
+                        <td>
+                            <select id="movie_status">
+                                <option value="0">미개봉</option>
+                                <option value="1">상영중</option>
+                                <option value="2">스트리밍</option>
+                            </select>
+                        </td>
+                        <td>연도</td>
+                        <td>
+                            <input type="text" id="movie_year">
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

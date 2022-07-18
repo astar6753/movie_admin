@@ -3,14 +3,13 @@
 <mapper namespace="com.greenart.movie_admin.mapper.ActorMapper">
 
     <select id="selectCinemaActorList" resultType="com.greenart.movie_admin.data.actor.CinemaActorListVO">
-        select a.*, b.cap_file_name as photo 
-            from cinema_actor_info a 
-		left outer join
-            (
-            select * from cinema_actor_photo 
-            group by cap_cai_seq
-            ) b
-        on a.cai_seq = b.cap_cai_seq
+        SELECT *, (
+                SELECT cap_file_name FROM cinema_actor_photo cap 
+                WHERE cap_cai_seq  = b.cai_seq
+                ORDER BY cap_seq desc
+                LIMIT 1
+                )as photo
+        FROM cinema_actor_info b
         where cai_name like '%${keyword}%'
             <if test="country != null">
             and cai_country = #{country}

@@ -15,7 +15,7 @@
 	<name>movie_admin</name>
 	<description>영화 정보 제공 서비스(관리자 서비스)</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

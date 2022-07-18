@@ -67,7 +67,7 @@
                                 <c:if test="${item.poster_img == null}">
                                     style="background-image:url('/assets/images/movie_default.png');
                                 </c:if>
-                                    width:60px; height:80px; background-size: auto 50%;
+                                    width:60px; height:80px; background-size: auto 100%;
                                     background-repeat: no-repeat;"
                             ></div>
                         </td>
